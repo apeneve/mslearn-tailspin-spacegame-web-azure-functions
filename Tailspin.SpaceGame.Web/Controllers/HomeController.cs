@@ -5,7 +5,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using TailSpin.SpaceGame.Web.Models;
 
 namespace TailSpin.SpaceGame.Web.Controllers
@@ -13,20 +12,11 @@ namespace TailSpin.SpaceGame.Web.Controllers
     public class HomeController : Controller
     {
         private ILeaderboardServiceClient _leaderboardServiceClient;
-        private readonly IConfiguration _config;
 
-        public HomeController(ILeaderboardServiceClient leaderboardServiceClient, IConfiguration config)
+        public HomeController(ILeaderboardServiceClient leaderboardServiceClient)
         {
             this._leaderboardServiceClient = leaderboardServiceClient;
-            _config = config;
         }
-
-        public IActionResult Config() {
-
-            var content = $"LeaderboardFunctionUrl: {_config.GetSection("AppSettings").GetValue(typeof(string), "LeaderboardFunctionUrl")}";
-
-                return Content(content);
-            }
 
         public async Task<IActionResult> Index(
             int page = 1,
